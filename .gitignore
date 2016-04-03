@@ -1,5 +1,6 @@
-*
-!bin/composer.phar
-!.gitignore
-!composer.json
-!README.md
+/*
+!/bin/composer.phar
+!/.gitignore
+!/composer.json
+!/README.md
+!/config/
