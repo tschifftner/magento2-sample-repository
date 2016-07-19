@@ -21,6 +21,7 @@
     "magento/product-community-edition": "2.1.*",
     "magento/module-bundle-sample-data": "100.1.*",
     "magento/module-catalog-rule-sample-data": "100.1.*",
+    "magento/module-catalog-sample-data": "100.1.*",
     "magento/module-cms-sample-data": "100.1.*",
     "magento/module-configurable-sample-data": "100.1.*",
     "magento/module-customer-sample-data": "100.1.*",
@@ -46,7 +47,7 @@
     "phpmd/phpmd": "@stable",
     "pdepend/pdepend": "2.0.6",
     "sjparkinson/static-review": "~4.1",
-    "fabpot/php-cs-fixer": "~1.2",
+    "friendsofphp/php-cs-fixer": "v1.11.*",
     "lusitanian/oauth": "~0.3 <=0.7.0"
   },
   "config": {
@@ -80,3 +81,4 @@
     "magento-force": "override"
   }
 }
+
