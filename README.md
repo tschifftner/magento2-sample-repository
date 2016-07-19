@@ -1,3 +1,7 @@
+
+[![Build Status](https://travis-ci.org/tschifftner/magento2-sample-repository.svg?branch=master)](https://travis-ci.org/tschifftner/magento2-sample-repository)
+
+
 # Magento 2 Sample Repository
 
 This is a sample repository for Magento 2 including all available sample data
