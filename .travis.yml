@@ -37,14 +37,14 @@ matrix:
 before_install:
   - openssl aes-256-cbc -K $encrypted_e0b1e0c2baff_key -iv $encrypted_e0b1e0c2baff_iv -in tests/auth.json.enc -out ~/.composer/auth.json -d
   - bin/composer.phar install --no-interaction --prefer-dist --dev
-  - chmod +x ./dev/travis/before_install.sh
+  - chmod a+x ./dev/travis/before_install.sh
   - ./dev/travis/before_install.sh
 
 install: 
   - composer install --no-interaction --prefer-dist
 
 before_script: 
-  - chmod +x ./dev/travis/before_script.sh
+  - chmod a+x ./dev/travis/before_script.sh
   - ./dev/travis/before_script.sh
 
 script:
