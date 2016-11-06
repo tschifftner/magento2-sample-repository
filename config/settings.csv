@@ -1,5 +1,22 @@
 Handler,Param1,Param2,Param3,GROUPS,DEFAULT,devbox,deploy,latest,production,staging
 ,,,,,,,,,,
 # Database parameters first (as Est_Handler_Magento_CoreConfigData relies on this):,,,,,,,,,,
-Est_Handler_PhpEnvFile,app/etc/env.php,backend/frontname,,db,,myadmin,,,,
-
+Est_Handler_PhpEnvFile,app/etc/env.php,crypt/key,,route,3p8cc666b1ddeaced9eifzzf670k49,,,,,
+Est_Handler_PhpEnvFile,app/etc/env.php,backend/frontName,,route,backend_7z8j,admin,,,,
+Est_Handler_PhpEnvFile,app/etc/env.php,db/connection/default/host,,db,localhost,,,,,
+Est_Handler_PhpEnvFile,app/etc/env.php,db/connection/default/username,,db,,dev,,,live,staging
+Est_Handler_PhpEnvFile,app/etc/env.php,db/connection/default/password,,db,,e4FgH0Oe$fkGcdpl,,,password,password
+Est_Handler_PhpEnvFile,app/etc/env.php,db/connection/default/dbname,,db,,magento2-sample-repo,,,live,staging
+,,,,,,,,,,
+# General,,,,,,,,,,
+Est_Handler_Magento_CoreConfigData,default,0,system/adminnotification/use_https,1,,,,,,
+Est_Handler_Magento_CoreConfigData,default,0,system/adminnotification/frequency,24,,,,,,
+#Est_Handler_Magento_CoreConfigData,default,0,dev/template/allow_symlink,1,,,,,,
+Est_Handler_Magento_CoreConfigData,default,0,design/head/demonotice,,1,,,,0,
+Est_Handler_Magento_CoreConfigData,default,0,admin/security/use_case_sensitive_login,,1,,,,,
+,,,,,,,,,,
+# Urls,,,,,,,,,,
+Est_Handler_Magento_CoreConfigData,%,%,web/{{secure|unsecure}}/base_url,,--delete--,,,,,
+Est_Handler_Magento_CoreConfigData,default,0,web/{{unsecure|secure}}/base_url,,,http://magento2-sample-repo.local/,,,https://www.example.com/,https://staging.example.com/
+Est_Handler_Magento_CoreConfigData,default,0,web/secure/use_in_frontend,,0,,,,1,1
+Est_Handler_Magento_CoreConfigData,default,0,web/secure/use_in_adminhtml,,0,,,,1,1
