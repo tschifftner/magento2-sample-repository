@@ -2,7 +2,6 @@
 ./dev
 ./phpserver
 ./pub/media
-./setup
 ./tools/composer.phar
 ./var
 ./.travis.yml
@@ -16,4 +15,3 @@
 ./*.sample
 ./vendor/phpunit
 ./vendor/phpmd
-./vendor/phpseclib
