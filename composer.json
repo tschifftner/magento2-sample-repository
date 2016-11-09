@@ -42,7 +42,8 @@
     "composer/composer": "@alpha",
     "tschifftner/magento2-deployscripts": "@dev",
     "tschifftner/magento2-module-tschifftner-deployhelper": "dev-master",
-    "aoepeople/zettr": "@dev"
+    "aoepeople/zettr": "@dev",
+    "splendidinternet/mage2-locale-de-de": "^1.11"
   },
   "require-dev": {
     "phpunit/phpunit": "4.1.0",
@@ -84,4 +85,3 @@
     "magento-force": "override"
   }
 }
-
