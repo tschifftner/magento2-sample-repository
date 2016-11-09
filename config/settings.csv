@@ -20,3 +20,7 @@ Est_Handler_Magento_CoreConfigData,%,%,web/{{secure|unsecure}}/base_url,,--delet
 Est_Handler_Magento_CoreConfigData,default,0,web/{{unsecure|secure}}/base_url,,,http://magento2-sample-repo.local/,,,https://www.example.com/,https://staging.example.com/
 Est_Handler_Magento_CoreConfigData,default,0,web/secure/use_in_frontend,,0,,,,1,1
 Est_Handler_Magento_CoreConfigData,default,0,web/secure/use_in_adminhtml,,0,,,,1,1
+Est_Handler_Magento_CoreConfigData,default,0,web/cookie/cookie_lifetime,,14400,86400,,,,
+Est_Handler_Magento_CoreConfigData,default,0,web/cookie/cookie_path,,/,,,,,
+Est_Handler_Magento_CoreConfigData,default,0,web/cookie/cookie_domain,,--delete--,magento2-sample-repo.local,,,example.com,staging.example.com
+Est_Handler_Magento_CoreConfigData,default,0,web/cookie/cookie_httponly,,0,,,,,
