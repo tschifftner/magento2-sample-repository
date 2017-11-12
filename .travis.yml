@@ -21,8 +21,6 @@ env:
     - INTEGRATION_SETS=3
     - NODE_JS_VERSION=6
     - MAGENTO_HOST_NAME="magento2.travis"
-    # Magento Download Credentials
-    - secure: "HMQ+s98Sg+/yjg6A2qffek4+LAX4FBjw5M8hhdBWXluU89xz4otsY6weGtaw9wN47vPDwqioNvEzSe1szLzrYPumrc/wiCUKT+Y1C9CAYO3UTRTIzOezv+bHfSoCrVizrihvZSB5Htn2h2me702de3658mLuAWdurZ0xIvrOAqSjFeUSuySfQQkGOjEHgwan+FzjUFGMOU/hWdkbWojaxDcGlyjNEGYh+scNFlAV6fJqU4m0GayDlzvytQUg4YnExqF+3nDg7p3PPMF1zfaHzQG5kxSeVXfej+k6tm4xAVojRO4w7G8JoqyHf+CqJh2kVNUSArfD/jDj0jL9VqbESpSHLUyLA53lz4jD/N78O31u+W7Lw4p2kGIzxe/wkC22WuwvddSva/hFiijgNwUGyHg+R9kJeARyUIMtnslX/l6tfa+JR10mE/umOfdu3TdXQHeXYhSl5xPmz9uZm+njbHxbxKUt7+jJaMwxdwzT2ArKJjbl7XEZz4BRsHWTPjQ7FX9MdpXQRGb/Y3+nzwWXkVDZngppOd0iAGgqcgU6Kv7cZz+WKIf6+9RYl7/ZJkaA7XcGQIeBHZotIurKUb2HTgbmk2cT0yOybDLkfi44XYBcN6QWFVTHxSXf0N1nZOS5vIMxNnOEWQikQOBjKK6cSBgcFrWamuny/eXUWtlbbFs="
   matrix:
     - TEST_SUITE=unit
     - TEST_SUITE=static
@@ -53,7 +51,9 @@ cache:
     - $HOME/node_modules
     - $HOME/yarn.lock
 before_install: ./dev/travis/before_install.sh
-install: composer install --no-interaction --prefer-dist
+install:
+  - echo "{\"http-basic\":{\"repo.magento.com\":{\"username\":\"${MAGENTO_USERNAME}\",\"password\":\"${MAGENTO_PASSWORD}\"}}}" > auth.json
+  - composer install --no-interaction --prefer-dist
 before_script: ./dev/travis/before_script.sh
 script:
   # Set arguments for variants of phpunit based tests; '|| true' prevents failing script when leading test fails
