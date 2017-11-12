@@ -1,5 +1,6 @@
 sudo: required
 dist: trusty
+group: edge
 addons:
   apt:
     packages:
@@ -7,31 +8,59 @@ addons:
     - mysql-client-core-5.6
     - mysql-client-5.6
     - postfix
+  firefox: "46.0"
+  hosts:
+      - magento2.travis
 language: php
 php:
-  - 5.6
   - 7.0
+  - 7.1
 env:
   global:
     - COMPOSER_BIN_DIR=~/bin
     - INTEGRATION_SETS=3
+    - NODE_JS_VERSION=6
+    - MAGENTO_HOST_NAME="magento2.travis"
+    # Magento Download Credentials
+    - secure: "q4FKSrKPnd0mhNTUQYsvhWVYFAIeHQjBcP2X0Fcgp/gYytvQ6Xs20deyZtOYxIFoE62oHgugpxoXG4tDgRqwkgAkEY9XHXEugl9oMviYoQ5djUEVaUnn0o1BRSS2dGfwJTtqyy2PcLFo+1pAbN8peiogS7HDGGIP1lJUxawWmJN5f0KUvnhJXfLyZsL5HhQcjkxqzSRwuHnejIw/qL4UM3oaH66kqgXKRss7I+piWvNisUlG8/fg7crczB9S0UCDSdip1E7qsZEjyD4yfS8Q/LgDwM9yph6OdWrl+Pn3sC0Ww8mKOeXxp9LFBeYCBpAwbn90bfR6wl1ramzvKsFrzViv1tCXuyLIbF/XsaXHVvF6A3Bi6djLtcjl47aYfK4Z2zYMhKDkH6FENTuswuwvQ1TS/DAkseb4/PFcHsM2qw6q4Isl61EPGaZvPmzLwEALsmI/Q9zRt9FvQhQSvlFYT2LJwFHEoc7ALzGriXyRpY8SNZJ6P0Bh9KN6NRwL1Y3BdiOw1L7Il2eeb7ZjE6qX97z2kMnGNK0xQEaq0fyEidVXMSIZkMwLVZzN7iZ0DXMMPzegotVCVi00hFqB9WpX0WkV7Ky+smc0z0i95qyrFeDjvvzCtXCRlqjI7KEgIzkCCFLocNidij61bPyYLVsAgwKCtVrHnTjsa682JSSEeBY="
   matrix:
     - TEST_SUITE=unit
+    - TEST_SUITE=static
+    - TEST_SUITE=js GRUNT_COMMAND=spec
+    - TEST_SUITE=js GRUNT_COMMAND=static
     - TEST_SUITE=integration INTEGRATION_INDEX=1
     - TEST_SUITE=integration INTEGRATION_INDEX=2
     - TEST_SUITE=integration INTEGRATION_INDEX=3
-    - TEST_SUITE=static
-cache:
-  apt: true
-  directories: $HOME/.composer/cache
+    - TEST_SUITE=functional ACCEPTANCE_INDEX=1
+    - TEST_SUITE=functional ACCEPTANCE_INDEX=2
 matrix:
   exclude:
     - php: 7.0
       env: TEST_SUITE=static
+    - php: 7.0
+      env: TEST_SUITE=js GRUNT_COMMAND=spec
+    - php: 7.0
+      env: TEST_SUITE=js GRUNT_COMMAND=static
+    - php: 7.0
+      env: TEST_SUITE=functional ACCEPTANCE_INDEX=1
+    - php: 7.0
+      env: TEST_SUITE=functional ACCEPTANCE_INDEX=2
+cache:
+  apt: true
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.nvm
+    - $HOME/node_modules
+    - $HOME/yarn.lock
 before_install: ./dev/travis/before_install.sh
 install: composer install --no-interaction --prefer-dist
 before_script: ./dev/travis/before_script.sh
-script: 
-  - cd dev/tests/$TEST_SUITE
+script:
+  # Set arguments for variants of phpunit based tests; '|| true' prevents failing script when leading test fails
   - test $TEST_SUITE = "static" && TEST_FILTER='--filter "Magento\\Test\\Php\\LiveCodeTest"' || true
-  - phpunit $TEST_FILTER
+  - test $TEST_SUITE = "functional" && TEST_FILTER='dev/tests/functional/testsuites/Magento/Mtf/TestSuite/InjectableTests.php' || true
+
+  # The scripts for grunt/phpunit type tests
+  - if [ $TEST_SUITE == "functional" ]; then dev/tests/functional/vendor/phpunit/phpunit/phpunit -c dev/tests/$TEST_SUITE $TEST_FILTER; fi
+  - if [ $TEST_SUITE != "functional" ] && [ $TEST_SUITE != "js" ]; then phpunit -c dev/tests/$TEST_SUITE $TEST_FILTER; fi
+  - if [ $TEST_SUITE == "js" ]; then grunt $GRUNT_COMMAND; fi
